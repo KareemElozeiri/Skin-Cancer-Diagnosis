@@ -23,29 +23,37 @@ if __name__ == "__main__":
                       metrics=['acc'])
 
     #data preprocessing for the model
-    train_datagen = ImageDataGenerator(rescale=1./255)
+    train_datagen = ImageDataGenerator(rescale=1./255,
+                                        rotation_range=40,
+                                        width_shift_range=0.2,
+                                        height_shift_range=0.2,
+                                        shear_range=0.2,
+                                        zoom_range=0.2,
+                                        horizontal_flip=True)
     val_datagen = ImageDataGenerator(rescale=1./255)
+
+    batch_size = 32
 
     train_generator = train_datagen.flow_from_directory(
         train_dir,
         target_size=(150, 150),
-        batch_size=10,
+        batch_size=batch_size,
         class_mode="binary"
     )
 
     validation_generator = val_datagen.flow_from_directory(
         validate_dir,
         target_size=(150,150),
-        batch_size=10,
+        batch_size=batch_size,
         class_mode='binary'
     )
             
-    history = classifer.fit_generator(
+    history = classifer.fit(
         train_generator,
-        steps_per_epoch=100,
-        epochs=30,
+        epochs=100,
         validation_data=validation_generator,
-        validation_steps=50
+        steps_per_epoch=int(700/batch_size),
+        validation_steps=int(350/batch_size)
     )
 
     classifer.save("skinCancerDiagnoser.h5")
