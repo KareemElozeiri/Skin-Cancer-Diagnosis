@@ -52,8 +52,8 @@ if __name__ == "__main__":
         train_generator,
         epochs=100,
         validation_data=validation_generator,
-        steps_per_epoch=int(700/batch_size),
-        validation_steps=int(350/batch_size)
+        steps_per_epoch=int(1000/batch_size),
+        validation_steps=int(480/batch_size)
     )
 
     classifer.save("skinCancerDiagnoser.h5")

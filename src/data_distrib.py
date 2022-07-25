@@ -25,39 +25,54 @@ if __name__ == "__main__":
     validate_malignant_dir = os.path.join(validate_dir,"malignant")
 
 
+    #renaming
+    files_benign_old_dir = "../dataset/benign/"
+    files_malignant_old_dir = "../dataset/malignant"
+    files_benign_dir = os.path.join(all_data_dir,"benign")
+    files_malignant_dir = os.path.join(all_data_dir,"malignant")
+    files_benign = os.listdir(files_benign_old_dir)
+    files_malignant = os.listdir(files_malignant_old_dir)
+    i = 0
+    for f in files_benign:
+        os.rename(os.path.join(files_benign_old_dir,f),os.path.join(files_benign_dir,f"{i}.jpg"))
+        i+=1
+    i = 0
+    for f in files_malignant:
+        os.rename(os.path.join(files_malignant_old_dir,f),os.path.join(files_malignant_dir, f"{i}.jpg"))
+        i+=1
 
     #training images
-    for i in range(1,701):
+    for i in range(0,1000):
         src  = os.path.join(all_data_dir,f"benign/{i}.jpg")
         dst = os.path.join(train_benign_dir,f"{i}.jpg")
         shutil.copyfile(src, dst)
-    for i in range(1,701):
+    for i in range(0,1000):
         src  = os.path.join(all_data_dir,f"malignant/{i}.jpg")
         dst = os.path.join(train_malignant_dir,f"{i}.jpg")
         shutil.copyfile(src, dst)
 
     # #validation images
-    for i in range(701,1051):
+    for i in range(1000,1480):
         src  = os.path.join(all_data_dir,f"benign/{i}.jpg")
         dst = os.path.join(validate_benign_dir,f"{i}.jpg")
         shutil.copyfile(src, dst)
     
-    for i in range(789,1054):
+    for i in range(1000,1480):
         src  = os.path.join(all_data_dir,f"malignant/{i}.jpg")
         dst = os.path.join(validate_malignant_dir,f"{i-1}.jpg")
         shutil.copyfile(src, dst)
 
         
     #testing images
-    for i in range(1054,1405):
-        src  = os.path.join(all_data_dir,f"benign/{i}.jpg")
-        dst = os.path.join(test_benign_dir,f"{i-1}.jpg")
-        shutil.copyfile(src, dst)
+    # for i in range(1054,1405):
+    #     src  = os.path.join(all_data_dir,f"benign/{i}.jpg")
+    #     dst = os.path.join(test_benign_dir,f"{i-1}.jpg")
+    #     shutil.copyfile(src, dst)
     
-    for i in range(1054,1405):
-        src  = os.path.join(all_data_dir,f"malignant/{i-1}.jpg")
-        dst = os.path.join(test_malignant_dir,f"{i-1}.jpg")
-        shutil.copyfile(src, dst)
+    # for i in range(1054,1405):
+    #     src  = os.path.join(all_data_dir,f"malignant/{i-1}.jpg")
+    #     dst = os.path.join(test_malignant_dir,f"{i-1}.jpg")
+    #     shutil.copyfile(src, dst)
 
 
     print(f"Train Benign Count: {len(os.listdir(train_benign_dir))}")
